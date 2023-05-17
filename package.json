@@ -1,0 +1,23 @@
+{
+  "name": "green-run",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josue1090/green-run.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josue1090/green-run/issues"
+  },
+  "homepage": "https://github.com/josue1090/green-run#readme",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.2"
+  }
+}
