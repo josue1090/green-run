@@ -1,0 +1,15 @@
+{
+  "database": {
+    "host": "localhost",
+    "user": "root",
+    "password": "josue123",
+    "database": "green_run"
+  },
+  "server": {
+    "port": 5000,
+    "jwtSecret": "random-secret-password",
+    "jwtExpiration": "1h",
+    "routePrefix": "",
+    "plugins": ["logger", "jwt-auth", "swagger"]
+  }
+}
