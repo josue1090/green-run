@@ -42,4 +42,6 @@ export const registerJwtPlugin: registerJwtPlugin = async (
       algorithms: ["HS256"],
     },
   });
+
+  server.auth.default("jwt");
 };
