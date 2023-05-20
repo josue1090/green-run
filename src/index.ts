@@ -1,13 +1,8 @@
 import { Boom } from "@hapi/boom";
 import { Request, ResponseObject, ResponseToolkit, Server } from "@hapi/hapi";
-import { ValidationError } from "joi";
 import * as Dotenv from "dotenv";
 // tslint:disable-next-line: no-import-side-effect
 import "reflect-metadata";
-import { DataSource } from "typeorm";
-
-import { BaseServer } from "./common/interface";
-import { nodeEnvSchema } from "./common/validate";
 import { init } from "./server";
 import AppDataSource from "./db/data-source";
 
