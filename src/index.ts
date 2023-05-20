@@ -1,28 +1,26 @@
-import * as Boom from "@hapi/boom";
+import { Boom } from "@hapi/boom";
 import { Request, ResponseObject, ResponseToolkit, Server } from "@hapi/hapi";
-import { validate, ValidationError } from "@hapi/joi";
+import { ValidationError } from "joi";
 import * as Dotenv from "dotenv";
 // tslint:disable-next-line: no-import-side-effect
 import "reflect-metadata";
-import { createConnection, DataSource } from "typeorm";
+import { DataSource } from "typeorm";
 
 import { BaseServer } from "./common/interface";
 import { nodeEnvSchema } from "./common/validate";
 import { init } from "./server";
+import AppDataSource from "./db/data-source";
 
-type connectToDatabase = (server: BaseServer) => Promise<Connection>;
 type preResponse = (request: Request, h: ResponseToolkit) => symbol;
 type start = () => Promise<void>;
 type loadEnvs = () => Dotenv.DotenvParseOutput;
-
-
 
 /**
  * Prints all unhandled errors on the screen.
  */
 const preResponse: preResponse = (
   request: Request,
-  h: ResponseToolkit,
+  h: ResponseToolkit
 ): symbol => {
   const response: ResponseObject | Boom = request.response;
 
@@ -39,15 +37,13 @@ const preResponse: preResponse = (
  */
 const loadEnvs: loadEnvs = (): Dotenv.DotenvParseOutput => {
   const dotenvConfigOutput: Dotenv.DotenvConfigOutput = Dotenv.config();
-  if (dotenvConfigOutput.error !== undefined || dotenvConfigOutput.parsed === undefined) {
+  if (
+    dotenvConfigOutput.error !== undefined ||
+    dotenvConfigOutput.parsed === undefined
+  ) {
     throw dotenvConfigOutput.error;
   }
   const { parsed: envs } = dotenvConfigOutput;
-  validate(envs, nodeEnvSchema, (error: ValidationError | null) => {
-    if (error !== null) {
-      throw error;
-    }
-  });
 
   return envs;
 };
@@ -59,9 +55,16 @@ const start: start = async (): Promise<void> => {
   const server: Server = await init();
 
   server.ext("onPreResponse", preResponse);
-  server.app = loadEnvs();
-  await connectToDatabase(server as BaseServer);
-  console.info("Connected to database!");
+  const envs = loadEnvs();
+  server.app = envs;
+  AppDataSource(envs)
+    .initialize()
+    .then(() => {
+      console.log("Data Source has been initialized!");
+    })
+    .catch((err) => {
+      console.error("Error during Data Source initialization", err);
+    });
 
   await server.start();
 };
@@ -70,9 +73,7 @@ start()
   .then(() => {
     console.info("Ready to receive requests!");
   })
-  .catch(
-    (err: Error): void => {
-      console.info("Error starting server: ", err.message);
-      process.exit(1);
-    },
-  );
+  .catch((err: Error): void => {
+    console.info("Error starting server: ", err.message);
+    process.exit(1);
+  });

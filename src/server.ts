@@ -19,7 +19,7 @@ export const init: init = async (): Promise<Server> => {
         failAction: async (
           request: Request,
           h: ResponseToolkit,
-          err: Error | undefined,
+          err: Error | undefined
         ): Promise<void> => {
           if (err instanceof Error) {
             throw err;
@@ -31,7 +31,7 @@ export const init: init = async (): Promise<Server> => {
 
   await installPlugins(server);
 
-  User.init(server);
+  // Add here all modules to start with the server
 
   return server;
 };
