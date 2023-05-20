@@ -7,6 +7,8 @@ type installPlugins = (server: Server) => Promise<void>;
 /**
  * Registers all hapi plugins.
  */
-export const installPlugins: installPlugins = async (server: Server): Promise<void> => {
+export const installPlugins: installPlugins = async (
+  server: Server
+): Promise<void> => {
   await registerJwtPlugin(server);
 };

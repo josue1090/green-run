@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-const gulp = require('gulp');
-const rimraf = require('gulp-rimraf');
-const tslint = require('gulp-tslint');
-const shell = require('gulp-shell');
+const gulp = require("gulp");
+const rimraf = require("gulp-rimraf");
+const tslint = require("gulp-tslint");
+const shell = require("gulp-shell");
 
 /**
  * Remove build directory.
@@ -14,8 +14,7 @@ const shell = require('gulp-shell');
 // });
 
 function clean() {
-  return gulp.src(outDir, { read: false })
-    .pipe(rimraf());
+  return gulp.src(outDir, { read: false }).pipe(rimraf());
 }
 
 /**
@@ -30,10 +29,13 @@ function clean() {
 // });
 
 function tslintCompile() {
-  return gulp.src('src/**/*.ts')
-    .pipe(tslint({
-      formatter: 'prose'
-    }))
+  return gulp
+    .src("src/**/*.ts")
+    .pipe(
+      tslint({
+        formatter: "prose",
+      })
+    )
     .pipe(tslint.report());
 }
 
@@ -57,9 +59,7 @@ function compileTS(args, cb) {
 // ]))
 
 function compile() {
-  return shell.task([
-    'npm run tsc',
-  ])
+  return shell.task(["npm run tsc"]);
 }
 
 /**
@@ -70,9 +70,7 @@ function compile() {
 // ]))
 
 function watch() {
-  return shell.task([
-    'npm run tsc-watch',
-  ])
+  return shell.task(["npm run tsc-watch"]);
 }
 /**
  * Copy config files
@@ -83,14 +81,14 @@ function watch() {
 // });
 
 function configs() {
-  return gulp.src("src/configurations/*.json")
-    .pipe(gulp.dest('./build/src/configurations'));
+  return gulp
+    .src("src/configurations/*.json")
+    .pipe(gulp.dest("./build/src/configurations"));
 }
 
 /**
  * Build the project.
  */
-
 
 // gulp.task('build', ['tslint', 'compile', 'configs'], () => {
 //   console.log('Building the project ...');
@@ -98,11 +96,8 @@ function configs() {
 
 // gulp.task('default', ['build']);
 
-
 exports.build = gulp.parallel(
   // tslintCompile,
   compile,
   configs
-)
-
-
+);
