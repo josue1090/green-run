@@ -32,7 +32,6 @@ const validate: validate = async (
 export const registerJwtPlugin: registerJwtPlugin = async (
   server: Server
 ): Promise<void> => {
-  console.log("registering jwt");
   await server.register(HapiAuthJwt2);
 
   server.auth.strategy("jwt", "jwt", {
