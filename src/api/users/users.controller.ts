@@ -16,7 +16,7 @@ export class UsersController {
     this.authService = new AuthService();
   }
 
-  public async createUser(request: ICreateUserUserRequest, h: ResponseToolkit) {
+  async createUser(request: ICreateUserUserRequest, h: ResponseToolkit) {
     try {
       const encriptedPassword = await encryptPassword(request.payload.password);
       const user: User = await this.usersService.create({

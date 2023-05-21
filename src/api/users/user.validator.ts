@@ -4,7 +4,9 @@ import { UserState } from "./enums/user-state.enum";
 import { Role } from "../shared/enums/role.enum";
 
 export const createUser = Joi.object().keys({
-  role: Joi.string().valid(...Object.values(Role)),
+  role: Joi.string()
+    .valid(...Object.values(Role))
+    .required(),
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   phone: Joi.string(),
