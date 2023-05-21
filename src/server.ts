@@ -1,7 +1,8 @@
 import { Request, ResponseToolkit, Server } from "@hapi/hapi";
 
 import { installPlugins } from "./plugins";
-import * as Auth from "./api/auth";
+import * as AuthModule from "./api/auth";
+import * as UsersModule from "./api/users";
 
 type init = () => Promise<Server>;
 
@@ -32,8 +33,9 @@ export const init: init = async (): Promise<Server> => {
 
   await installPlugins(server);
 
-  // Registering all routes for the app
-  Auth.init(server);
+  // Registering all app modules
+  AuthModule.init(server);
+  UsersModule.init(server);
 
   return server;
 };

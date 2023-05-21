@@ -3,8 +3,10 @@ import { Request, ResponseObject, ResponseToolkit, Server } from "@hapi/hapi";
 import * as Dotenv from "dotenv";
 // tslint:disable-next-line: no-import-side-effect
 import "reflect-metadata";
+
 import { init } from "./server";
 import AppDataSource from "./db/data-source";
+import { NodeEnvs } from "./common/interface";
 
 type preResponse = (request: Request, h: ResponseToolkit) => symbol;
 type start = () => Promise<void>;
@@ -50,8 +52,7 @@ const start: start = async (): Promise<void> => {
   const server: Server = await init();
 
   server.ext("onPreResponse", preResponse);
-  const envs = loadEnvs();
-  server.app = envs;
+  server.app = loadEnvs();
   AppDataSource.initialize()
     .then(() => {
       console.log("Data Source has been initialized!");
