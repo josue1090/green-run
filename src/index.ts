@@ -52,8 +52,7 @@ const start: start = async (): Promise<void> => {
   server.ext("onPreResponse", preResponse);
   const envs = loadEnvs();
   server.app = envs;
-  AppDataSource(envs)
-    .initialize()
+  AppDataSource.initialize()
     .then(() => {
       console.log("Data Source has been initialized!");
     })

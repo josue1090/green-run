@@ -1,15 +1,18 @@
 import { DataSource } from "typeorm";
+import * as dotenv from "dotenv";
 
-const AppDataSource = (envs: any) =>
-  new DataSource({
-    type: "mysql",
-    host: envs.DATABASE_URL,
-    port: parseInt(String(envs.DATABASE_PORT)),
-    username: envs.DATABASE_USERNAME,
-    password: envs.DATABASE_PASSWORD,
-    database: envs.DATABASE_NAME,
-    entities: ["./src/api/**/entities/*.entity.ts"],
-    synchronize: false,
-  });
+dotenv.config();
+
+const AppDataSource = new DataSource({
+  type: "mysql",
+  host: process.env.DATABASE_URL,
+  port: parseInt(String(process.env.DATABASE_PORT)),
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  entities: ["./src/api/**/entities/*.entity.ts"],
+  migrations: [__dirname + "/migrations/*.{t,j}s"],
+  synchronize: false,
+});
 
 export default AppDataSource;
