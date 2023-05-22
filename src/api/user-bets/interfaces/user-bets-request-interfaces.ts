@@ -1,4 +1,4 @@
-import { BaseRequest } from "../../../common/interface";
+import { BaseRequest } from "../../shared/interfaces/interface";
 import { IUserBet } from "./user-bet.interface";
 import { UserBetsFilterParams } from "./user-bets-filter.interface";
 

@@ -31,7 +31,7 @@ export const UserTransactionRepository = AppDataSource.getRepository(
       })
       .getMany();
   },
-  findUserBalance(userId: number) {
+  getUserBalance(userId: number) {
     return this.query(`
       SELECT UserBalance.userId, SUM(UserBalance.balance) as balance
       FROM (SELECT UT.userId,

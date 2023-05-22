@@ -1,4 +1,4 @@
-import { BaseRequest } from "../../../common/interface";
+import { BaseRequest } from "../../shared/interfaces/interface";
 import { EventFilterParams } from "./event-filter.interface";
 import { IEvent } from "./event.interface";
 

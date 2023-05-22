@@ -6,7 +6,7 @@ import {
   IGetAllBetsRequest,
   IUpdateBetRequest,
 } from "./interfaces/bet-request-interfaces";
-import { IdParamRequest } from "../../common/interface";
+import { IdParamRequest } from "../shared/interfaces/interface";
 
 export class BetsController {
   private readonly betsService: BetsService;

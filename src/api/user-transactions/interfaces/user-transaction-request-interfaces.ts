@@ -1,4 +1,4 @@
-import { BaseRequest } from "../../../common/interface";
+import { BaseRequest } from "../../shared/interfaces/interface";
 import { UserTransactionFilterParams } from "./user-transaction-filter.params";
 import { IUserTransaction } from "./user-transaction.interface";
 

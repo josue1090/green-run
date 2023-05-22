@@ -1,9 +1,9 @@
 import * as Jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 
-import { UsersService } from "./../users/users.service";
+import { UsersService } from "../users/users.service";
 import User from "../users/entities/user.entity";
-import { BaseRequest } from "../../common/interface";
+import { BaseRequest } from "../shared/interfaces/interface";
 
 export class AuthService {
   private readonly usersService: UsersService;

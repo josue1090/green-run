@@ -29,4 +29,16 @@ export class UserTransactionsService {
     const userTransaction = this.userTransactionRepository.create(payload);
     return userTransaction.save();
   }
+
+  async getUserBalance(userId: number): Promise<number | null> {
+    const userBalances = await this.userTransactionRepository.getUserBalance(
+      userId
+    );
+
+    if (!userBalances.length) return null;
+
+    const userBalance: { userId: number; balance: number } = userBalances[0];
+
+    return userBalance.balance;
+  }
 }

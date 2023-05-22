@@ -1,4 +1,4 @@
-import { BaseRequest } from "../../../common/interface";
+import { BaseRequest } from "../../shared/interfaces/interface";
 import { BetFilterParams } from "./bet-filter.interface";
 import { IBet } from "./bet.interface";
 

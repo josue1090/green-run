@@ -5,7 +5,7 @@ import {
   IUpdateEventRequest,
 } from "./interfaces/event-request-interfaces";
 import { ResponseToolkit } from "@hapi/hapi";
-import { IdParamRequest } from "../../common/interface";
+import { IdParamRequest } from "../shared/interfaces/interface";
 
 export class EventsController {
   private readonly eventsService: EventsService;

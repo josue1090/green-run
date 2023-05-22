@@ -10,6 +10,6 @@ export interface IUpdateUserRequest extends BaseRequest {
 
 export interface IPlaceDepositRequest extends BaseRequest {
   payload: {
-    amount: number
-  }
+    amount: number;
+  };
 }

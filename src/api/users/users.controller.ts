@@ -5,6 +5,7 @@ import {
   IUpdateUserRequest,
 } from "./interfaces/user-request-interfaces";
 import { UsersService } from "./users.service";
+import { BaseRequest, IdParamRequest } from "../shared/interfaces/interface";
 
 export class UsersController {
   private readonly usersService: UsersService;
@@ -30,5 +31,21 @@ export class UsersController {
     );
 
     return h.response(transaction);
+  }
+
+  async getCurrentUserBalance(request: BaseRequest, h: ResponseToolkit) {
+    const userId = request.auth.credentials.id as any;
+
+    const balance = await this.usersService.getUserBalance(userId);
+
+    return h.response({ balance });
+  }
+
+  async getUserBalance(request: IdParamRequest, h: ResponseToolkit) {
+    const userId = request.params.id;
+
+    const balance = await this.usersService.getUserBalance(userId);
+
+    return h.response({ balance });
   }
 }
