@@ -9,7 +9,5 @@ export interface IUpdateUserRequest extends BaseRequest {
   params: {
     id: number;
   };
-  payload: Partial<IUser> & {
-    id: number;
-  };
+  payload: Partial<IUser>;
 }

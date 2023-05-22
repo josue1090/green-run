@@ -2,7 +2,6 @@ import { Server } from "@hapi/hapi";
 import { UsersController } from "./users.controller";
 import * as UserValidator from "./user.validator";
 import { ParamsIdValidator } from "../shared/validators/request-validators";
-import { Role } from "../shared/enums/role.enum";
 
 export default function (server: Server) {
   const userController = new UsersController();
@@ -39,17 +38,12 @@ export default function (server: Server) {
     options: {
       handler: userController.updateUser,
       tags: ["api", "users"],
-      description: "Update a user.",
+      description: "Update an user.",
       validate: {
         payload: UserValidator.updateUser,
         params: ParamsIdValidator,
       },
-      // TODO work on this
-      // auth: {
-      //   access: {
-      //     scope: ["user", "USER"],
-      //   },
-      // },
+      auth: "jwt",
       plugins: {
         "hapi-swagger": {
           responses: {

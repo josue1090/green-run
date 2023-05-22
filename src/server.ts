@@ -3,6 +3,7 @@ import { Request, ResponseToolkit, Server } from "@hapi/hapi";
 import { installPlugins } from "./plugins";
 import * as AuthModule from "./api/auth";
 import * as UsersModule from "./api/users";
+import * as EventsModule from "./api/events";
 
 type init = () => Promise<Server>;
 
@@ -36,6 +37,7 @@ export const init: init = async (): Promise<Server> => {
   // Registering all app modules
   AuthModule.init(server);
   UsersModule.init(server);
+  EventsModule.init(server);
 
   return server;
 };

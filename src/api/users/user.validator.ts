@@ -20,7 +20,9 @@ export const createUser = Joi.object().keys({
   city: Joi.string(),
   category: Joi.string(),
   documentNumber: Joi.string(),
-  userState: Joi.string().valid(...Object.values(UserState)),
+  userState: Joi.string()
+    .valid(...Object.values(UserState))
+    .required(),
 });
 
 export const updateUser = Joi.object().keys({

@@ -32,7 +32,7 @@ export const registerSwaggerPlugin = async (
           },
         },
         security: [{ jwt: [] }],
-        schemes: ["http", "https"],
+        schemes: [],
         swaggerUI: true,
         documentationPage: true,
         documentationPath: "/api-docs",

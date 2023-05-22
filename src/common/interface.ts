@@ -20,7 +20,7 @@ export interface BaseRequest extends Request {
 
 export interface IdParamRequest extends Request {
   params: {
-    id: string;
+    id: number;
   };
 }
 
