@@ -1,6 +1,7 @@
 import { ResponseToolkit } from "@hapi/hapi";
 
 import {
+  IPlaceDepositRequest,
   IUpdateUserRequest,
 } from "./interfaces/user-request-interfaces";
 import { UsersService } from "./users.service";
@@ -19,5 +20,15 @@ export class UsersController {
     );
 
     return h.response(updatedUser);
+  }
+
+  async placeDeposit(request: IPlaceDepositRequest, h: ResponseToolkit) {
+    const userId = request.auth.credentials.id as any;
+    const transaction = await this.usersService.depositMoney(
+      userId,
+      request.payload.amount
+    );
+
+    return h.response(transaction);
   }
 }

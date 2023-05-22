@@ -7,3 +7,9 @@ export interface IUpdateUserRequest extends BaseRequest {
   };
   payload: Partial<IUser>;
 }
+
+export interface IPlaceDepositRequest extends BaseRequest {
+  payload: {
+    amount: number
+  }
+}

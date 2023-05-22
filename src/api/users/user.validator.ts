@@ -20,3 +20,7 @@ export const updateUser = Joi.object().keys({
   documentNumber: Joi.string(),
   userState: Joi.string().valid(...Object.values(UserState)),
 });
+
+export const deposit = Joi.object().keys({
+  amount: Joi.number().positive().required(),
+});

@@ -34,4 +34,31 @@ export default function (server: Server) {
       },
     },
   });
+
+  // Place a deposit
+  server.route({
+    method: "POST",
+    path: "/transactions/deposit",
+    options: {
+      handler: userController.placeDeposit,
+      tags: ["api", "transactions"],
+      description: "Place a deposit",
+      validate: {
+        payload: UserValidator.deposit,
+      },
+      auth: "jwt",
+      plugins: {
+        "hapi-swagger": {
+          responses: {
+            "200": {
+              description: "Deposit success",
+            },
+            "401": {
+              description: "User does not have authorization.",
+            },
+          },
+        },
+      },
+    },
+  });
 }

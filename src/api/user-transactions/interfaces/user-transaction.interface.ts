@@ -6,6 +6,6 @@ export interface IUserTransaction extends IBaseRecord {
   userId: number;
   amount: number;
   category: UserTransactionCategory;
-  status: UserTransactionStatus;
+  status?: UserTransactionStatus;
   userBetId?: number;
 }
