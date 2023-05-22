@@ -94,6 +94,35 @@ export default function (server: Server) {
     },
   });
 
+  // Withdraw money
+  server.route({
+    method: "POST",
+    path: "/transactions/withdraw",
+    options: {
+      handler: userController.withDrawMoney,
+      tags: ["api", "transactions"],
+      description: "With draw money",
+      validate: {
+        payload: UserValidator.withdraw,
+      },
+      auth: {
+        scope: Role.USER,
+      },
+      plugins: {
+        "hapi-swagger": {
+          responses: {
+            "200": {
+              description: "Withdraw success",
+            },
+            "401": {
+              description: "User does not have authorization.",
+            },
+          },
+        },
+      },
+    },
+  });
+
   // Check user balance for a user role
   server.route({
     method: "POST",

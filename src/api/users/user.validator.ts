@@ -24,3 +24,5 @@ export const updateUser = Joi.object().keys({
 export const deposit = Joi.object().keys({
   amount: Joi.number().positive().required(),
 });
+
+export const withdraw = deposit;

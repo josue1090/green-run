@@ -30,6 +30,19 @@ export class UserTransactionsService {
     return userTransaction.save();
   }
 
+  async createWithdrawTransaction(
+    userId: number,
+    amount: number
+  ): Promise<UserTransaction> {
+    const payload: IUserTransaction = {
+      amount,
+      category: UserTransactionCategory.WITHDRAW,
+      userId,
+    };
+    const userTransaction = this.userTransactionRepository.create(payload);
+    return userTransaction.save();
+  }
+
   async getUserBalance(userId: number): Promise<number | null> {
     const userBalances = await this.userTransactionRepository.getUserBalance(
       userId

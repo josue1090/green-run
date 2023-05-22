@@ -13,3 +13,5 @@ export interface IPlaceDepositRequest extends BaseRequest {
     amount: number;
   };
 }
+
+export interface IWithdrawMoney extends IPlaceDepositRequest {}

@@ -44,6 +44,13 @@ export class UsersService {
     );
   }
 
+  async withDrawMoney(userId: number, amount: number) {
+    return this.userTransactionsService.createWithdrawTransaction(
+      userId,
+      amount
+    );
+  }
+
   async getUserBalance(userId: number): Promise<number | null> {
     return this.userTransactionsService.getUserBalance(userId);
   }

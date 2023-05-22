@@ -3,6 +3,7 @@ import { ResponseToolkit } from "@hapi/hapi";
 import {
   IPlaceDepositRequest,
   IUpdateUserRequest,
+  IWithdrawMoney,
 } from "./interfaces/user-request-interfaces";
 import { UsersService } from "./users.service";
 import { BaseRequest, IdParamRequest } from "../shared/interfaces/interface";
@@ -25,12 +26,16 @@ export class UsersController {
 
   async placeDeposit(request: IPlaceDepositRequest, h: ResponseToolkit) {
     const userId = request.auth.credentials.id as any;
-    const transaction = await this.usersService.depositMoney(
-      userId,
-      request.payload.amount
-    );
+    await this.usersService.depositMoney(userId, request.payload.amount);
 
-    return h.response(transaction);
+    return h.response({ success: true });
+  }
+
+  async withDrawMoney(request: IWithdrawMoney, h: ResponseToolkit) {
+    const userId = request.auth.credentials.id as any;
+    await this.usersService.withDrawMoney(userId, request.payload.amount);
+
+    return h.response({ success: true });
   }
 
   async getCurrentUserBalance(request: BaseRequest, h: ResponseToolkit) {
