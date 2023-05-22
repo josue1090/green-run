@@ -32,7 +32,7 @@ export default function (server: Server) {
     },
   });
 
-  // Create Event
+  // Create Bet
   server.route({
     method: "POST",
     path: "/bets",
@@ -43,7 +43,9 @@ export default function (server: Server) {
       validate: {
         payload: BetValidator.createBet,
       },
-      auth: "jwt",
+      auth: {
+        scope: "admin",
+      },
       plugins: {
         "hapi-swagger": {
           responses: {
@@ -56,7 +58,7 @@ export default function (server: Server) {
     },
   });
 
-  // Update Event
+  // Update Bet
   server.route({
     method: "PUT",
     path: "/bets/{id}",
@@ -68,7 +70,9 @@ export default function (server: Server) {
         payload: BetValidator.updateBet,
         params: ParamsIdValidator,
       },
-      auth: "jwt",
+      auth: {
+        scope: "admin",
+      },
       plugins: {
         "hapi-swagger": {
           responses: {
@@ -84,7 +88,7 @@ export default function (server: Server) {
     },
   });
 
-  // Delete Event
+  // Delete Bet
   server.route({
     method: "DELETE",
     path: "/bets/{id}",
@@ -95,7 +99,9 @@ export default function (server: Server) {
       validate: {
         params: ParamsIdValidator,
       },
-      auth: "jwt",
+      auth: {
+        scope: "admin",
+      },
       plugins: {
         "hapi-swagger": {
           responses: {
@@ -111,7 +117,7 @@ export default function (server: Server) {
     },
   });
 
-  // Recover Event
+  // Recover Bet
   server.route({
     method: "DELETE",
     path: "/bets/{id}/recover",
@@ -122,7 +128,9 @@ export default function (server: Server) {
       validate: {
         params: ParamsIdValidator,
       },
-      auth: "jwt",
+      auth: {
+        scope: "admin",
+      },
       plugins: {
         "hapi-swagger": {
           responses: {

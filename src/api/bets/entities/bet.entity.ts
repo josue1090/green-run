@@ -6,6 +6,7 @@ import { EventStatus } from "../../shared/enums/event-status.enum";
 import { BetResult } from "../../shared/enums/bet-result.enum";
 import Event from "../../events/entities/event.entity";
 import UserBet from "../../user-bets/entities/user-bet.entity";
+import { EventSport } from "../../shared/enums/event-sports.enum";
 
 @Entity({ name: "Bets" })
 class Bet extends BaseRecord implements IBet {
@@ -23,6 +24,9 @@ class Bet extends BaseRecord implements IBet {
 
   @Column({ type: "enum", enum: BetResult })
   result: BetResult;
+
+  @Column({ type: "enum", enum: EventSport })
+  sport: EventSport;
 
   @Column()
   eventId: number;

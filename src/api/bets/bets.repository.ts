@@ -17,6 +17,26 @@ export const BetsRepository = AppDataSource.getRepository(Bet).extend({
             })
           );
         }
+
+        if (filter?.sport) {
+          qb.andWhere(
+            new Brackets((bqb) => {
+              bqb.where("Bets.sport = :sport", {
+                sport: filter.sport,
+              });
+            })
+          );
+        }
+
+        if (filter?.eventId) {
+          qb.andWhere(
+            new Brackets((bqb) => {
+              bqb.where("Bets.eventId = :eventId", {
+                eventId: filter.eventId,
+              });
+            })
+          );
+        }
       })
       .getMany();
   },

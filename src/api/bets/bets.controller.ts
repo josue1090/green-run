@@ -1,4 +1,5 @@
 import { ResponseToolkit } from "@hapi/hapi";
+
 import { BetsService } from "./bets.service";
 import {
   ICreateBetRequest,
