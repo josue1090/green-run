@@ -6,6 +6,7 @@ import * as UsersModule from "./api/users";
 import * as EventsModule from "./api/events";
 import * as BetsModule from "./api/bets";
 import * as UserBetsModule from "./api/user-bets";
+import * as UserTransactionsModule from "./api/user-transactions";
 
 type init = () => Promise<Server>;
 
@@ -42,6 +43,7 @@ export const init: init = async (): Promise<Server> => {
   EventsModule.init(server);
   BetsModule.init(server);
   UserBetsModule.init(server);
+  UserTransactionsModule.init(server);
 
   return server;
 };

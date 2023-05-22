@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from "typeorm";
+import { AfterLoad, Column, Entity, OneToMany } from "typeorm";
 
 import { BaseRecord } from "../../shared/entities/base-record.entity";
 import { IUser as UserModel } from "../interfaces/user.interface";
@@ -59,6 +59,13 @@ class User extends BaseRecord implements UserModel {
 
   @OneToMany(() => UserTransaction, (userTransaction) => userTransaction.user)
   userTransactions: UserTransaction[];
+
+  scope: string;
+
+  @AfterLoad()
+  setScope() {
+    this.scope = this.role;
+  }
 }
 
 export default User;

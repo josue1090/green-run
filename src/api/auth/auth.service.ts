@@ -15,7 +15,7 @@ export class AuthService {
   generateToken(user: User, request: BaseRequest) {
     const jwtSecret = request.server.app.JWT_SECRET;
     const jwtExpiration = process.env.JWT_EXPIRATION;
-    const payload = { id: user.id, role: user.role };
+    const payload = { id: user.id, scope: [user.role] };
 
     return Jwt.sign(payload, jwtSecret, { expiresIn: jwtExpiration });
   }
