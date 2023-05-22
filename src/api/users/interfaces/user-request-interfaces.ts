@@ -7,7 +7,9 @@ export interface ICreateUserUserRequest extends BaseRequest {
 
 export interface IUpdateUserRequest extends BaseRequest {
   params: {
-    id: string;
+    id: number;
   };
-  payload: IUser;
+  payload: Partial<IUser> & {
+    id: number;
+  };
 }

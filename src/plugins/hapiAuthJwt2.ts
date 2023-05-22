@@ -1,7 +1,9 @@
-import { unauthorized } from "@hapi/boom";
+import * as Boom from "@hapi/boom";
 import { Request, Server } from "@hapi/hapi";
 import * as HapiAuthJwt2 from "hapi-auth-jwt2";
 import { verify } from "jsonwebtoken";
+import AppDataSource from "../db/data-source";
+import User from "../api/users/entities/user.entity";
 
 type registerJwtPlugin = (server: Server) => Promise<void>;
 type validate = (
@@ -22,6 +24,15 @@ const validate: validate = async (
   decoded: Decoded,
   request: Request
 ): Promise<ValidateResponse> => {
+  verify(request.headers.authorization, process.env.JWT_SECRET as string);
+  const user = AppDataSource.getRepository(User).findOne({
+    where: { id: parseInt(decoded.id) },
+  });
+
+  if (!user) {
+    throw Boom.unauthorized("Unauthorized.");
+  }
+
   return {
     isValid: true,
   };

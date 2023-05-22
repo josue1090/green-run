@@ -49,10 +49,7 @@ const loadEnvs: loadEnvs = (): Dotenv.DotenvParseOutput => {
  * Starts hapi server, loads environment variables and connects to the database
  */
 const start: start = async (): Promise<void> => {
-  const server: Server = await init();
-
-  server.ext("onPreResponse", preResponse);
-  server.app = loadEnvs();
+  // Start database
   AppDataSource.initialize()
     .then(() => {
       console.log("Data Source has been initialized!");
@@ -60,6 +57,12 @@ const start: start = async (): Promise<void> => {
     .catch((err) => {
       console.error("Error during Data Source initialization", err);
     });
+
+  // Start Server
+  const server: Server = await init();
+
+  server.ext("onPreResponse", preResponse);
+  server.app = loadEnvs();
 
   await server.start();
 };

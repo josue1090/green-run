@@ -1,7 +1,10 @@
 import { ResponseToolkit } from "@hapi/hapi";
 import * as Boom from "@hapi/boom";
 
-import { ICreateUserUserRequest } from "./interfaces/user-request-interfaces";
+import {
+  ICreateUserUserRequest,
+  IUpdateUserRequest,
+} from "./interfaces/user-request-interfaces";
 import User from "./entities/user.entity";
 import { AuthService } from "../auth/auth.service";
 import { encryptPassword } from "../../utils/user.utils";
@@ -29,5 +32,14 @@ export class UsersController {
     } catch (error: any) {
       return Boom.badImplementation(error);
     }
+  }
+
+  async updateUser(request: IUpdateUserRequest, h: ResponseToolkit) {
+    const updatedUser = await this.usersService.update(
+      request.params.id,
+      request.payload
+    );
+
+    return h.response(updatedUser);
   }
 }

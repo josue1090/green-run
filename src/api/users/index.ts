@@ -1,6 +1,6 @@
 import { Server } from "@hapi/hapi";
-import Routes from "./routes";
+import UserRoutes from "./user-routes";
 
 export function init(server: Server) {
-  Routes(server);
+  UserRoutes(server);
 }

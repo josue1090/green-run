@@ -24,9 +24,18 @@ export const registerSwaggerPlugin = async (
             description: "Api authentication interface",
           },
         ],
+        securityDefinitions: {
+          jwt: {
+            type: "apiKey",
+            name: "Authorization",
+            in: "header",
+          },
+        },
+        security: [{ jwt: [] }],
+        schemes: ["http", "https"],
         swaggerUI: true,
         documentationPage: true,
-        documentationPath: "/docs",
+        documentationPath: "/api-docs",
       },
     },
   ]);
