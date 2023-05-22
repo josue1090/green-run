@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 
 import { BaseRecord } from "../../shared/entities/base-record.entity";
 import { IEvent } from "../interfaces/event.interface";
-import { EventSport } from "../enums/event-sports.enum";
+import { EventSport } from "../../shared/enums/event-sports.enum";
 import { EventStatus } from "../../shared/enums/event-status.enum";
 import { EventScore } from "../enums/event-score.enum";
 import Bet from "../../bets/entities/bet.entity";

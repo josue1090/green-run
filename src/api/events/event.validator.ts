@@ -1,5 +1,5 @@
 import * as Joi from "joi";
-import { EventSport } from "./enums/event-sports.enum";
+import { EventSport } from "../shared/enums/event-sports.enum";
 import { EventStatus } from "../shared/enums/event-status.enum";
 import { EventScore } from "./enums/event-score.enum";
 

@@ -2,6 +2,7 @@ import * as Boom from "@hapi/boom";
 import { Request, Server } from "@hapi/hapi";
 import * as HapiAuthJwt2 from "hapi-auth-jwt2";
 import { verify } from "jsonwebtoken";
+
 import AppDataSource from "../db/data-source";
 import User from "../api/users/entities/user.entity";
 
@@ -25,7 +26,7 @@ const validate: validate = async (
   request: Request
 ): Promise<ValidateResponse> => {
   verify(request.headers.authorization, process.env.JWT_SECRET as string);
-  const user = AppDataSource.getRepository(User).findOne({
+  const user = await AppDataSource.getRepository(User).findOne({
     where: { id: parseInt(decoded.id) },
   });
 
