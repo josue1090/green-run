@@ -1,9 +1,10 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 
 import { BaseRecord } from "../../shared/entities/base-record.entity";
 import { IUser as UserModel } from "../interfaces/user.interface";
 import { Role } from "../../shared/enums/role.enum";
 import { UserState } from "../enums/user-state.enum";
+import UserBet from "../../user-bets/entities/user-bet.entity";
 
 @Entity({ name: "Users" })
 class User extends BaseRecord implements UserModel {
@@ -51,6 +52,9 @@ class User extends BaseRecord implements UserModel {
 
   @Column({ type: "enum", enum: UserState, default: UserState.ACTIVE })
   userState: UserState;
+
+  @OneToMany(() => UserBet, (userBet) => userBet.user)
+  userBets: UserBet[];
 }
 
 export default User;

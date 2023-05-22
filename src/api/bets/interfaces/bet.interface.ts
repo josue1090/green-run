@@ -1,6 +1,6 @@
 import { IBaseRecord } from "../../shared/interfaces/base-record.interface";
 import { EventStatus } from "../../shared/enums/event-status.enum";
-import { BetResult } from "../enums/bet-result.enum";
+import { BetResult } from "../../shared/enums/bet-result.enum";
 
 export interface IBet extends IBaseRecord {
   option: number;
