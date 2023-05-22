@@ -1,4 +1,4 @@
-import { AfterLoad, Column, Entity, OneToMany } from "typeorm";
+import { AfterLoad, Column, Entity, Index, OneToMany } from "typeorm";
 
 import { BaseRecord } from "../../shared/entities/base-record.entity";
 import { IUser as UserModel } from "../interfaces/user.interface";
@@ -8,6 +8,7 @@ import UserBet from "../../user-bets/entities/user-bet.entity";
 import UserTransaction from "../../user-transactions/entities/user-transaction.entity";
 
 @Entity({ name: "Users" })
+@Index("users_email_index", ["email"], { unique: true })
 class User extends BaseRecord implements UserModel {
   @Column({ type: "enum", enum: Role })
   role: Role;

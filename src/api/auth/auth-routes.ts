@@ -30,7 +30,16 @@ export default function (server: Server) {
       tags: ["api", "auth"],
       description: "Register a new User",
       validate: {
-        payload: AuthValidator.login,
+        payload: AuthValidator.signUp,
+      },
+      plugins: {
+        "hapi-swagger": {
+          responses: {
+            "201": {
+              description: "User created.",
+            },
+          },
+        },
       },
     },
   });

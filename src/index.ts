@@ -6,7 +6,6 @@ import "reflect-metadata";
 
 import { init } from "./server";
 import AppDataSource from "./db/data-source";
-import { NodeEnvs } from "./common/interface";
 
 type preResponse = (request: Request, h: ResponseToolkit) => symbol;
 type start = () => Promise<void>;
