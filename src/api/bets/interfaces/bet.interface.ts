@@ -5,10 +5,10 @@ import { EventSport } from "../../shared/enums/event-sports.enum";
 
 export interface IBet extends IBaseRecord {
   option: number;
-  status: EventStatus;
+  status?: EventStatus;
   name: string;
   odd: number;
   sport: EventSport;
-  result: BetResult;
+  result?: BetResult;
   eventId: number;
 }

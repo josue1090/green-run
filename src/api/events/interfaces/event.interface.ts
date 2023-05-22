@@ -8,5 +8,5 @@ export interface IEvent extends IBaseRecord {
   secondTeam: string;
   sport: EventSport;
   status: EventStatus;
-  score: EventScore;
+  score?: EventScore;
 }

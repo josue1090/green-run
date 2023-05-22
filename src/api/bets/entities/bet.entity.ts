@@ -22,7 +22,7 @@ class Bet extends BaseRecord implements IBet {
   @Column({ type: "float" })
   odd: number;
 
-  @Column({ type: "enum", enum: BetResult })
+  @Column({ type: "enum", enum: BetResult, nullable: true })
   result: BetResult;
 
   @Column({ type: "enum", enum: EventSport })

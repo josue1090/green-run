@@ -12,7 +12,7 @@ export const signUp = Joi.object().keys({
     .valid(...Object.values(Role))
     .required(),
   firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
+  lastName: Joi.string(),
   phone: Joi.string(),
   email: Joi.string().email().required(),
   password: Joi.string().trim().required(),

@@ -16,8 +16,8 @@ class User extends BaseRecord implements UserModel {
   @Column({ type: "varchar", length: 100 })
   firstName: string;
 
-  @Column({ type: "varchar", length: 100 })
-  lastName: string;
+  @Column({ type: "varchar", length: 100, nullable: true })
+  lastName?: string;
 
   @Column({ type: "varchar", length: 50, nullable: true })
   phone?: string;
@@ -40,20 +40,20 @@ class User extends BaseRecord implements UserModel {
   @Column({ type: "datetime", nullable: true })
   birthDate?: Date;
 
-  @Column({ type: "varchar", length: 100 })
-  country: string;
+  @Column({ type: "varchar", length: 100, nullable: true })
+  country?: string;
 
-  @Column({ type: "varchar" })
-  city: string;
+  @Column({ type: "varchar", nullable: true })
+  city?: string;
 
-  @Column({ type: "varchar", length: 100 })
-  category: string;
+  @Column({ type: "varchar", length: 100, nullable: true })
+  category?: string;
 
-  @Column({ type: "varchar", length: 100 })
-  documentNumber: string;
+  @Column({ type: "varchar", length: 100, nullable: true })
+  documentNumber?: string;
 
   @Column({ type: "enum", enum: UserState, default: UserState.ACTIVE })
-  userState: UserState;
+  userState?: UserState;
 
   @OneToMany(() => UserBet, (userBet) => userBet.user)
   userBets: UserBet[];
