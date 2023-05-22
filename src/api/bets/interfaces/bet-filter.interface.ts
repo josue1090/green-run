@@ -1,5 +1,5 @@
 import { EventStatus } from "../../shared/enums/event-status.enum";
 
-export interface EventFilterParams {
+export interface BetFilterParams {
   status?: EventStatus;
 }
