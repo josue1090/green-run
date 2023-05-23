@@ -4,6 +4,7 @@ import { BetsRepository } from "./bets.repository";
 import Bet from "./entities/bet.entity";
 import { BetFilterParams } from "./interfaces/bet-filter.interface";
 import { IBet } from "./interfaces/bet.interface";
+import { EventStatus } from "../shared/enums/event-status.enum";
 
 export class BetsService {
   private readonly betsRepository: typeof BetsRepository;
@@ -31,6 +32,10 @@ export class BetsService {
 
   async update(id: number, updateBetPayload: Partial<IBet>): Promise<Bet> {
     const bet = await this.findById(id);
+
+    if (bet.isSettled() && updateBetPayload.status == EventStatus.CANCELLED)
+      throw Boom.badData();
+
     this.betsRepository.merge(bet, updateBetPayload);
     return bet.save();
   }

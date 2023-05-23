@@ -1,6 +1,6 @@
 import * as Joi from "joi";
 import { Role } from "../shared/enums/role.enum";
-import { UserState } from "../users/enums/user-state.enum";
+import { UserStatus } from "../users/enums/user-state.enum";
 
 export const login = Joi.object().keys({
   email: Joi.string().email().required(),
@@ -24,8 +24,7 @@ export const signUp = Joi.object().keys({
   city: Joi.string(),
   category: Joi.string(),
   documentNumber: Joi.string(),
-  userState: Joi.string()
-    .valid(...Object.values(UserState))
+  userState: Joi.string().valid(...Object.values(UserStatus)),
 });
 
 export const jwtValidator = Joi.object({

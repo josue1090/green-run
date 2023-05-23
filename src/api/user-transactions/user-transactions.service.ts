@@ -1,3 +1,5 @@
+import * as Boom from "@hapi/boom";
+
 import UserTransaction from "./entities/user-transaction.entity";
 import { UserTransactionFilterParams } from "./interfaces/user-transaction-filter.params";
 import { UserTransactionRepository } from "./user-transaction.repository";
@@ -60,6 +62,9 @@ export class UserTransactionsService {
       category: UserTransactionCategory.WITHDRAW,
       userId,
     };
+    const userHasEnoughMoney = await this.userHasEnoughMoney(userId, amount);
+    if (!userHasEnoughMoney) throw Boom.paymentRequired();
+
     const userTransaction = this.userTransactionRepository.create(payload);
     return userTransaction.save();
   }
@@ -74,5 +79,11 @@ export class UserTransactionsService {
     const userBalance: { userId: number; balance: number } = userBalances[0];
 
     return userBalance.balance;
+  }
+
+  async userHasEnoughMoney(userId: number, amount: number): Promise<boolean> {
+    const userBalance = await this.getUserBalance(userId);
+
+    return amount > userBalance;
   }
 }

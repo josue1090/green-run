@@ -18,7 +18,8 @@ export class UsersController {
   async updateUser(request: IUpdateUserRequest, h: ResponseToolkit) {
     const updatedUser = await this.usersService.update(
       request.params.id,
-      request.payload
+      request.payload,
+      request.auth.credentials.id as any
     );
 
     return h.response(updatedUser);

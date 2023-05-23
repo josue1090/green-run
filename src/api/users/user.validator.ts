@@ -1,6 +1,6 @@
 import * as Joi from "joi";
 
-import { UserState } from "./enums/user-state.enum";
+import { UserStatus } from "./enums/user-state.enum";
 import { Role } from "../shared/enums/role.enum";
 
 export const updateUser = Joi.object().keys({
@@ -18,7 +18,7 @@ export const updateUser = Joi.object().keys({
   city: Joi.string(),
   category: Joi.string(),
   documentNumber: Joi.string(),
-  userState: Joi.string().valid(...Object.values(UserState)),
+  status: Joi.string().valid(...Object.values(UserStatus)),
 });
 
 export const deposit = Joi.object().keys({

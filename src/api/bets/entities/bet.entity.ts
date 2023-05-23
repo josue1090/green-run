@@ -37,6 +37,22 @@ class Bet extends BaseRecord implements IBet {
 
   @OneToMany(() => UserBet, (userBet) => userBet.bet)
   userBets: UserBet[];
+
+  isSettled() {
+    return this.status == EventStatus.SETTLED;
+  }
+
+  isCancelled() {
+    return this.status == EventStatus.CANCELLED;
+  }
+
+  isDisabled() {
+    return !this.isActive();
+  }
+
+  isActive() {
+    return this.status == EventStatus.ACTIVE;
+  }
 }
 
 export default Bet;

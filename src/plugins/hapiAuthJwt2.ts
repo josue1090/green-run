@@ -30,7 +30,7 @@ const validate: validate = async (
     where: { id: parseInt(decoded.id) },
   });
 
-  if (!user) {
+  if (!user || user.isBlocked()) {
     throw Boom.unauthorized("Unauthorized.");
   }
 

@@ -3,7 +3,7 @@ import { AfterLoad, Column, Entity, Index, OneToMany } from "typeorm";
 import { BaseRecord } from "../../shared/entities/base-record.entity";
 import { IUser as UserModel } from "../interfaces/user.interface";
 import { Role } from "../../shared/enums/role.enum";
-import { UserState } from "../enums/user-state.enum";
+import { UserStatus } from "../enums/user-state.enum";
 import UserBet from "../../user-bets/entities/user-bet.entity";
 import UserTransaction from "../../user-transactions/entities/user-transaction.entity";
 
@@ -52,8 +52,8 @@ class User extends BaseRecord implements UserModel {
   @Column({ type: "varchar", length: 100, nullable: true })
   documentNumber?: string;
 
-  @Column({ type: "enum", enum: UserState, default: UserState.ACTIVE })
-  userState?: UserState;
+  @Column({ type: "enum", enum: UserStatus, default: UserStatus.ACTIVE })
+  status?: UserStatus;
 
   @OneToMany(() => UserBet, (userBet) => userBet.user)
   userBets: UserBet[];
@@ -62,6 +62,14 @@ class User extends BaseRecord implements UserModel {
   userTransactions: UserTransaction[];
 
   scope: string;
+
+  isAdmin() {
+    return this.role == Role.ADMIN;
+  }
+
+  isBlocked() {
+    return this.status == UserStatus.BLOCKED;
+  }
 
   @AfterLoad()
   setScope() {

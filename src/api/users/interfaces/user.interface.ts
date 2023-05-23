@@ -1,6 +1,6 @@
 import { Role } from "../../shared/enums/role.enum";
 import { IBaseRecord } from "../../shared/interfaces/base-record.interface";
-import { UserState } from "../enums/user-state.enum";
+import { UserStatus } from "../enums/user-state.enum";
 
 export interface IUser extends IBaseRecord {
   role: Role;
@@ -17,5 +17,5 @@ export interface IUser extends IBaseRecord {
   city?: string;
   category?: string;
   documentNumber?: string;
-  userState?: UserState;
+  status?: UserStatus;
 }

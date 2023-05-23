@@ -19,8 +19,15 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
-  async update(id: number, userUpdatePayload: Partial<IUser>): Promise<User> {
+  async update(
+    id: number,
+    userUpdatePayload: Partial<IUser>,
+    currentUserId: number
+  ): Promise<User> {
     const user = await this.findById(id);
+
+    if (user.isAdmin() && user.id !== currentUserId) throw Boom.unauthorized();
+
     this.usersRepository.merge(user, userUpdatePayload);
     return user.save();
   }
