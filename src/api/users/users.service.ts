@@ -4,6 +4,7 @@ import User from "./entities/user.entity";
 import { IUser } from "./interfaces/user.interface";
 import { UsersRepository } from "./users.repository";
 import { UserTransactionsService } from "../user-transactions/user-transactions.service";
+import { encryptPassword } from "../../utils/user.utils";
 
 export class UsersService {
   private readonly usersRepository: typeof UsersRepository;
@@ -28,7 +29,19 @@ export class UsersService {
 
     if (user.isAdmin() && user.id !== currentUserId) throw Boom.unauthorized();
 
-    this.usersRepository.merge(user, userUpdatePayload);
+    let encryptedPayload = {};
+
+    if (userUpdatePayload.password) {
+      const encryptedPassword = await encryptPassword(
+        userUpdatePayload.password
+      );
+      encryptedPayload = { password: encryptedPassword };
+    }
+
+    this.usersRepository.merge(user, {
+      ...userUpdatePayload,
+      ...encryptedPayload,
+    });
     return user.save();
   }
 
