@@ -1,3 +1,4 @@
+import { BetsRepository } from "./../bets/bets.repository";
 import * as Boom from "@hapi/boom";
 
 import UserBet from "./entities/user-bet.entity";
@@ -5,17 +6,16 @@ import { UserBetsFilterParams } from "./interfaces/user-bets-filter.interface";
 import { IUserBet } from "./interfaces/user-bet.interface";
 import { UserBetsRepository } from "./user-bets.repository";
 import { UserTransactionsService } from "../user-transactions/user-transactions.service";
-import { BetsService } from "../bets/bets.service";
 
 export class UserBetsService {
   private readonly userBetsRepository: typeof UserBetsRepository;
   private readonly userTransactionsService: UserTransactionsService;
-  private readonly betsService: BetsService;
+  private readonly betsRepository: typeof BetsRepository;
 
   constructor() {
     this.userBetsRepository = UserBetsRepository;
     this.userTransactionsService = new UserTransactionsService();
-    this.betsService = new BetsService();
+    this.betsRepository = BetsRepository;
   }
 
   async getAll(filter?: UserBetsFilterParams): Promise<UserBet[]> {
@@ -33,12 +33,12 @@ export class UserBetsService {
   async create(userBetPayload: IUserBet): Promise<UserBet> {
     const { userId, betId, amount } = userBetPayload;
     const userHasEnoughMoney =
-      await this.userTransactionsService.userHasEnoughMoney(userId, amount);
+      await this.userTransactionsService.userCanGetAmount(userId, amount);
 
     if (!userHasEnoughMoney) throw Boom.paymentRequired();
 
-    const bet = await this.betsService.findById(betId);
-    if (!bet.isActive()) throw Boom.paymentRequired();
+    const bet = await this.betsRepository.findOneBy({ id: betId });
+    if (!bet?.isActive()) throw Boom.paymentRequired();
 
     const userBet = await this.userBetsRepository.create(userBetPayload);
     const persistedUserBet = await this.userBetsRepository.save(userBet);

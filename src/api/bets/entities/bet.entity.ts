@@ -35,7 +35,9 @@ class Bet extends BaseRecord implements IBet {
   @JoinColumn({ name: "eventId" })
   event: Event;
 
-  @OneToMany(() => UserBet, (userBet) => userBet.bet)
+  @OneToMany(() => UserBet, (userBet) => userBet.bet, {
+    cascade: ["update", "insert"],
+  })
   userBets: UserBet[];
 
   isSettled() {

@@ -62,7 +62,7 @@ export class UserTransactionsService {
       category: UserTransactionCategory.WITHDRAW,
       userId,
     };
-    const userHasEnoughMoney = await this.userHasEnoughMoney(userId, amount);
+    const userHasEnoughMoney = await this.userCanGetAmount(userId, amount);
     if (!userHasEnoughMoney) throw Boom.paymentRequired();
 
     const userTransaction = this.userTransactionRepository.create(payload);
@@ -81,9 +81,9 @@ export class UserTransactionsService {
     return userBalance.balance;
   }
 
-  async userHasEnoughMoney(userId: number, amount: number): Promise<boolean> {
+  async userCanGetAmount(userId: number, amount: number): Promise<boolean> {
     const userBalance = await this.getUserBalance(userId);
 
-    return amount > userBalance;
+    return (userBalance || 0) > amount;
   }
 }

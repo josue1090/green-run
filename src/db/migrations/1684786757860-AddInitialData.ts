@@ -41,7 +41,7 @@ export class AddInitialData1684786757860 implements MigrationInterface {
       const scores = Object.values(EventScore);
       for (const score of scores) {
         const bet = Bet.merge(new Bet(), {
-          option: scores.indexOf(score),
+          option: scores.indexOf(score) + 1,
           name: this.getBetName(score, event),
           odd: this.genRand(),
           sport: event.sport,
@@ -53,7 +53,9 @@ export class AddInitialData1684786757860 implements MigrationInterface {
     }
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    // Nothing
+  }
 
   private getBetName(score: EventScore, event: Event): string {
     if (score == EventScore.DRAW) return "Draw";

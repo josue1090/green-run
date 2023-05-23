@@ -36,7 +36,11 @@ class UserBet extends BaseRecord implements IUserBet {
   @JoinColumn({ name: "betId" })
   bet: Bet;
 
-  @OneToOne(() => UserTransaction, (userTransaction) => userTransaction.userBet)
+  @OneToOne(
+    () => UserTransaction,
+    (userTransaction) => userTransaction.userBet,
+    { cascade: ["insert", "update"] }
+  )
   userTransaction: UserTransaction;
 }
 
