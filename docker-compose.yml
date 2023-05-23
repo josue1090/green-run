@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  backend:
+    build: . # Build image from local Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: "${DATABASE_PORT}"
+      DB_USER: "${DATABASE_USERNAME}"
+      DB_PASSWORD: "${DATABASE_PASSWORD}"
+      DB_NAME: "${DATABASE_NAME}"
+    ports:
+      - "3000:3000" # Expose port 3000 on host
+    depends_on:
+      - mysql # Wait until database service is loaded
+    networks:
+      - app-network
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
+      MYSQL_DATABASE: "${DATABASE_NAME}"
+      MYSQL_USER: "${DATABASE_USERNAME}"
+      MYSQL_PASSWORD: "${DATABASE_PASSWORD}"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./src/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 4s
+      timeout: 6s
+      retries: 5
+    networks:
+      - app-network
+volumes:
+  mysql:
+    driver: local
+networks: # Specify the network for bridging
+  app-network:
+    driver: bridge
