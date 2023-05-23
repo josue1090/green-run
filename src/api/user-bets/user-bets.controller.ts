@@ -21,7 +21,11 @@ export class UserBetsController {
   }
 
   async createUserBet(request: ICreateUserBetRequest, h: ResponseToolkit) {
-    const userBet = await this.userBetsService.create(request.payload);
+    const userId = parseInt(String(request.auth.credentials.id || 0));
+    const userBet = await this.userBetsService.create({
+      ...request.payload,
+      userId,
+    });
     return h.response(userBet);
   }
 

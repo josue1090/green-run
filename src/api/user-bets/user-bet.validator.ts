@@ -8,16 +8,12 @@ export const getAllUserBet = Joi.object().keys({
 });
 
 export const createUserBet = Joi.object().keys({
-  userId: Joi.number().positive().required(),
   betId: Joi.number().positive().required(),
   odd: Joi.number().positive().required(),
-  result: Joi.string().valid(...Object.values(BetResult)),
-  amount: Joi.number().positive(),
-  status: Joi.string().valid(...Object.values(UserBetsStatus)),
+  amount: Joi.number().positive().required(),
 });
 
 export const updateUserBet = Joi.object().keys({
-  userId: Joi.number().positive(),
   betId: Joi.number().positive(),
   odd: Joi.number().positive(),
   result: Joi.string().valid(...Object.values(BetResult)),

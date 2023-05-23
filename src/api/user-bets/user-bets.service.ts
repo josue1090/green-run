@@ -4,12 +4,15 @@ import UserBet from "./entities/user-bet.entity";
 import { UserBetsFilterParams } from "./interfaces/user-bets-filter.interface";
 import { IUserBet } from "./interfaces/user-bet.interface";
 import { UserBetsRepository } from "./user-bets.repository";
+import { UserTransactionsService } from "../user-transactions/user-transactions.service";
 
 export class UserBetsService {
   private readonly userBetsRepository: typeof UserBetsRepository;
+  private readonly userTransactionsService: UserTransactionsService;
 
   constructor() {
     this.userBetsRepository = UserBetsRepository;
+    this.userTransactionsService = new UserTransactionsService();
   }
 
   async getAll(filter?: UserBetsFilterParams): Promise<UserBet[]> {
@@ -24,9 +27,15 @@ export class UserBetsService {
     return userBet;
   }
 
-  async create(userBetPayload: IUserBet): Promise<IUserBet> {
+  async create(userBetPayload: IUserBet): Promise<UserBet> {
     const userBet = await this.userBetsRepository.create(userBetPayload);
-    return this.userBetsRepository.save(userBet);
+    const persistedUserBet = await this.userBetsRepository.save(userBet);
+
+    await this.userTransactionsService.createUserTransactionByUserBet(
+      persistedUserBet
+    );
+
+    return persistedUserBet;
   }
 
   async update(

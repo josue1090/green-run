@@ -3,12 +3,13 @@ import { Server } from "@hapi/hapi";
 import { UserBetsController } from "./user-bets.controller";
 import * as UserBetValidator from "./user-bet.validator";
 import { ParamsIdValidator } from "../shared/validators/request-validators";
+import { Role } from "../shared/enums/role.enum";
 
 export default function (server: Server) {
   const userBetsController = new UserBetsController();
   server.bind(userBetsController);
 
-  // Get all Events
+  // Get all User Bets
   server.route({
     method: "GET",
     path: "/userBets",
@@ -23,7 +24,7 @@ export default function (server: Server) {
       plugins: {
         "hapi-swagger": {
           responses: {
-            "201": {
+            "200": {
               description: "User Bets fetched.",
             },
           },
@@ -32,7 +33,7 @@ export default function (server: Server) {
     },
   });
 
-  // Create Event
+  // Create an User Bet
   server.route({
     method: "POST",
     path: "/userBets",
@@ -43,11 +44,13 @@ export default function (server: Server) {
       validate: {
         payload: UserBetValidator.createUserBet,
       },
-      auth: "jwt",
+      auth: {
+        scope: Role.USER,
+      },
       plugins: {
         "hapi-swagger": {
           responses: {
-            "201": {
+            "200": {
               description: "User bet created.",
             },
           },
@@ -56,7 +59,7 @@ export default function (server: Server) {
     },
   });
 
-  // Update Event
+  // Update an User Bet
   server.route({
     method: "PUT",
     path: "/userBets/{id}",
@@ -68,11 +71,13 @@ export default function (server: Server) {
         payload: UserBetValidator.updateUserBet,
         params: ParamsIdValidator,
       },
-      auth: "jwt",
+      auth: {
+        scope: Role.USER,
+      },
       plugins: {
         "hapi-swagger": {
           responses: {
-            "201": {
+            "200": {
               description: "User bet created.",
             },
             "401": {

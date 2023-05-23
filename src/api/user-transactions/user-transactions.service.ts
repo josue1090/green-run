@@ -3,6 +3,7 @@ import { UserTransactionFilterParams } from "./interfaces/user-transaction-filte
 import { UserTransactionRepository } from "./user-transaction.repository";
 import { IUserTransaction } from "./interfaces/user-transaction.interface";
 import { UserTransactionCategory } from "./enums/user-transaction-category.enum";
+import UserBetEntity from "../user-bets/entities/user-bet.entity";
 
 export class UserTransactionsService {
   private readonly userTransactionRepository: typeof UserTransactionRepository;
@@ -15,6 +16,26 @@ export class UserTransactionsService {
     filter: UserTransactionFilterParams
   ): Promise<UserTransaction[]> {
     return this.userTransactionRepository.findAll(filter);
+  }
+
+  async createUserTransaction(payload: IUserTransaction) {
+    const userTransaction = await this.userTransactionRepository.create(
+      payload
+    );
+    return userTransaction.save();
+  }
+
+  async createUserTransactionByUserBet(
+    userBet: UserBetEntity
+  ): Promise<UserTransaction> {
+    const payload: IUserTransaction = {
+      userId: userBet.userId,
+      amount: userBet.amount,
+      category: UserTransactionCategory.BET,
+      userBetId: userBet.id,
+    };
+
+    return this.createUserTransaction(payload);
   }
 
   async createDepositTransaction(

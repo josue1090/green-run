@@ -19,7 +19,7 @@ class UserBet extends BaseRecord implements IUserBet {
   @Column({ type: "float" })
   amount: number;
 
-  @Column({ type: "enum", enum: UserBetsStatus })
+  @Column({ type: "enum", enum: UserBetsStatus, default: UserBetsStatus.OPEN })
   status: UserBetsStatus;
 
   @Column()

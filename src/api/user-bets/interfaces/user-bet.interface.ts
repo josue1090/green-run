@@ -1,8 +1,8 @@
-import { BaseRecord } from "../../shared/entities/base-record.entity";
+import { IBaseRecord } from "../../shared/interfaces/base-record.interface";
 import { BetResult } from "../../shared/enums/bet-result.enum";
 import { UserBetsStatus } from "../enums/user-bets-status.enum";
 
-export interface IUserBet extends BaseRecord {
+export interface IUserBet extends IBaseRecord {
   userId: number;
   betId: number;
   odd: number;
