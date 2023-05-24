@@ -49,7 +49,6 @@ export class BetsService {
 
     if (updateBetPayload.result == BetResult.WON) {
       const userBets = await this.userBetsService.getAll({ betId: id });
-      console.log(userBets);
       for (const userBet of userBets) {
         const userTransactionPayload: IUserTransaction = {
           userId: userBet.userId,
