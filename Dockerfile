@@ -1,8 +1,8 @@
 FROM node:lts-alpine
-WORKDIR /app
+WORKDIR /green-run
 COPY . .
 RUN npm install
 RUN npm i tsc -g
 RUN npm run tsc
 EXPOSE 3000
-CMD ["node", "build/src/index.js"]
+CMD ["npm", "run", "start"]

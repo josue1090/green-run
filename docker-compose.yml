@@ -2,37 +2,46 @@ version: "3.8"
 services:
   backend:
     build: . # Build image from local Dockerfile
+    env_file: ./.env
     environment:
-      DB_HOST: db
-      DB_PORT: "${DATABASE_PORT}"
-      DB_USER: "${DATABASE_USERNAME}"
-      DB_PASSWORD: "${DATABASE_PASSWORD}"
-      DB_NAME: "${DATABASE_NAME}"
+      DB_HOST: mysql
+      DB_PORT: $DATABASE_PORT
+      DB_USER: $DATABASE_USERNAME
+      DB_PASSWORD: $DATABASE_PASSWORD
+      DB_NAME: $DATABASE_NAME
     ports:
-      - "3000:3000" # Expose port 3000 on host
+      - 3000:3000
     depends_on:
-      - mysql # Wait until database service is loaded
+      mysql:
+        condition: service_healthy
     networks:
       - app-network
   mysql:
     image: mysql
     container_name: mysql
     restart: always
+    env_file: ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
-      MYSQL_DATABASE: "${DATABASE_NAME}"
-      MYSQL_USER: "${DATABASE_USERNAME}"
-      MYSQL_PASSWORD: "${DATABASE_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: $DATABASE_PASSWORD
+      MYSQL_DATABASE: $DATABASE_NAME
+      MYSQL_USER: $DATABASE_USERNAME
+      MYSQL_PASSWORD: $DATABASE_PASSWORD
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql:/var/lib/mysql
-      - ./src/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - 3306:3306
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 4s
-      timeout: 6s
-      retries: 5
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "--user=$DATABASE_USERNAME",
+          "--password=$DATABASE_PASSWORD",
+        ]
+      interval: 3s
+      timeout: 3s
+      retries: 20
     networks:
       - app-network
 volumes:

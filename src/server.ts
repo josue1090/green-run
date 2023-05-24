@@ -15,7 +15,7 @@ type init = () => Promise<Server>;
  */
 export const init: init = async (): Promise<Server> => {
   const server: Server = new Server({
-    host: "localhost",
+    host: "0.0.0.0",
     port: 3000,
     routes: {
       cors: {

@@ -30,14 +30,30 @@ export class AddInitialData1684786757860 implements MigrationInterface {
       sport: EventSport.SOCCER,
     });
 
+    const lightWeightFightTitle = Event.merge(new Event(), {
+      firstTeam: "Mauricio Lara",
+      secondTeam: "Leigh Wood",
+      sport: EventSport.BOX,
+    });
+
+    const superlightWeightFightTitle = Event.merge(new Event(), {
+      firstTeam: "Luis Alberto López",
+      secondTeam: "Mick Conlan",
+      sport: EventSport.BOX,
+    });
+
     // Create first admin user
     await queryRunner.manager.save(adminUser);
 
     const firstEvent = await queryRunner.manager.save(championsLeagueFinal);
     const secondEvent = await queryRunner.manager.save(uefaFinal);
+    const thirdEvent = await queryRunner.manager.save(lightWeightFightTitle);
+    const fourthEvent = await queryRunner.manager.save(
+      superlightWeightFightTitle
+    );
 
     // Creating bets
-    for (const event of [firstEvent, secondEvent]) {
+    for (const event of [firstEvent, secondEvent, thirdEvent, fourthEvent]) {
       const scores = Object.values(EventScore);
       for (const score of scores) {
         const bet = Bet.merge(new Bet(), {

@@ -50,8 +50,9 @@ const loadEnvs: loadEnvs = (): Dotenv.DotenvParseOutput => {
 const start: start = async (): Promise<void> => {
   // Start database
   AppDataSource.initialize()
-    .then(() => {
+    .then(async () => {
       console.log("Data Source has been initialized!");
+      await AppDataSource.runMigrations();
     })
     .catch((err) => {
       console.error("Error during Data Source initialization", err);
